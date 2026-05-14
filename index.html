@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daniel Silva – Ingeniero en Multimedia</title>
+  <meta name="description" content="Portafolio de Daniel Santiago Silva, Ingeniero en Multimedia especializado en desarrollo de software, diseño UX/UI y experiencias digitales interactivas.">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      /* Type scale */
+      --text-xs:   clamp(0.75rem,  0.7rem + 0.25vw,  0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw,  1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem + 0.75vw,    1.5rem);
+      --text-xl:   clamp(1.5rem,   1.2rem + 1.25vw,  2.25rem);
+      --text-2xl:  clamp(2rem,     1.2rem + 2.5vw,   3.5rem);
+      --text-hero: clamp(3rem,     0.5rem + 7vw,     7rem);
+      /* Spacing */
+      --space-1: 0.25rem; --space-2: 0.5rem;  --space-3: 0.75rem;
+      --space-4: 1rem;    --space-5: 1.25rem; --space-6: 1.5rem;
+      --space-8: 2rem;    --space-10: 2.5rem; --space-12: 3rem;
+      --space-16: 4rem;   --space-20: 5rem;   --space-24: 6rem;
+      /* Radius */
+      --radius-sm: 0.375rem; --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;  --radius-xl: 1rem; --radius-full: 9999px;
+      /* Transitions */
+      --transition: 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      /* Fonts */
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono:    'Space Mono', monospace;
+      --font-body:    'Space Grotesk', sans-serif;
+      /* Content widths */
+      --content-default: 1000px;
+      --content-wide:    1200px;
+    }
+
+    /* Dark palette – azul oscuro */
+    [data-theme="dark"], :root {
+      --color-bg:           #050b18;
+      --color-surface:      #091528;
+      --color-surface-2:    #0d1e38;
+      --color-surface-3:    #112448;
+      --color-border:       rgba(96, 165, 250, 0.12);
+      --color-divider:      rgba(96, 165, 250, 0.08);
+      --color-text:         #e8f0fe;
+      --color-text-muted:   #94a8c8;
+      --color-text-faint:   #4a6080;
+      --color-accent:       #3b82f6;
+      --color-accent-bright:#60a5fa;
+      --color-accent-glow:  rgba(59, 130, 246, 0.35);
+      --color-accent-subtle:rgba(59, 130, 246, 0.1);
+      --color-white:        #ffffff;
+      --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+      --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
+      --shadow-lg:  0 12px 40px rgba(0,0,0,0.6);
+      --shadow-glow:0 0 30px rgba(59, 130, 246, 0.25);
+    }
+
+    /* ===== BASE RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--space-16); -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background: var(--color-bg); min-height: 100dvh; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    ul { list-style: none; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    .bg-grid { position: fixed; inset: 0; z-index: 0; pointer-events: none; background-image: linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+    .bg-orbs { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .bg-orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.15; animation: orb-drift 20s ease-in-out infinite alternate; }
+    .bg-orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, #1d4ed8, transparent); top: -100px; left: -100px; animation-duration: 18s; }
+    .bg-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #1e40af, transparent); bottom: 10%; right: -80px; animation-duration: 24s; animation-delay: -8s; }
+    .bg-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, #3b82f6, transparent); top: 40%; left: 40%; animation-duration: 30s; animation-delay: -15s; }
+    @keyframes orb-drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(40px, 60px) scale(1.1); } }
+
+    /* ===== LAYOUT ===== */
+    .page { position: relative; z-index: 1; }
+    .container { max-width: var(--content-default); margin-inline: auto; padding-inline: var(--space-6); }
+    .container--wide { max-width: var(--content-wide); }
+    section { padding-block: clamp(var(--space-16), 8vw, var(--space-24)); }
+
+    /* ===== NAVIGATION ===== */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: var(--space-4) var(--space-6); display: flex; align-items: center; justify-content: space-between; background: rgba(5,11,24,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--color-border); transition: var(--transition); }
+    .nav-logo { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-sm); font-weight: 700; color: var(--color-accent-bright); letter-spacing: 0.05em; }
+    .nav-logo svg { width: 32px; height: 32px; }
+    .nav-links { display: flex; align-items: center; gap: var(--space-6); }
+    .nav-links a { font-size: var(--text-sm); color: var(--color-text-muted); transition: color var(--transition); position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--transition); }
+    .nav-links a:hover { color: var(--color-text); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-cta { font-size: var(--text-sm); padding: var(--space-2) var(--space-4); border: 1px solid var(--color-accent); border-radius: var(--radius-full); color: var(--color-accent-bright); transition: background var(--transition), box-shadow var(--transition); }
+    .nav-cta:hover { background: var(--color-accent-subtle); box-shadow: var(--shadow-glow); }
+
+    /* ===== HERO ===== */
+    .hero { min-height: 100dvh; display: flex; align-items: center; padding-top: var(--space-20); position: relative; overflow: hidden; }
+    .hero-content { max-width: 800px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-accent-bright); background: var(--color-accent-subtle); border: 1px solid rgba(59,130,246,0.25); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); margin-bottom: var(--space-6); letter-spacing: 0.08em; text-transform: uppercase; }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-accent-bright); animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
+    .hero-name { font-family: var(--font-display); font-size: var(--text-hero); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--color-white); margin-bottom: var(--space-4); }
+    .hero-name .accent { background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-title { font-family: var(--font-mono); font-size: var(--text-lg); color: var(--color-text-muted); margin-bottom: var(--space-6); display: flex; align-items: center; gap: var(--space-2); }
+    .hero-title::before { content: '> '; color: var(--color-accent-bright); }
+    .hero-desc { font-size: var(--text-base); color: var(--color-text-muted); line-height: 1.7; max-width: 60ch; margin-bottom: var(--space-10); }
+    .hero-actions { display: flex; align-items: center; gap: var(--space-4); flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); background: var(--color-accent); color: var(--color-white); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 600; transition: background var(--transition), box-shadow var(--transition), transform var(--transition); box-shadow: 0 0 20px rgba(59,130,246,0.3); }
+    .btn-primary:hover { background: #2563eb; box-shadow: 0 0 35px rgba(59,130,246,0.5); transform: translateY(-1px); }
+    .btn-outline { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-6); border: 1px solid var(--color-border); color: var(--color-text-muted); border-radius: var(--radius-full); font-size: var(--text-sm); font-weight: 500; transition: border-color var(--transition), color var(--transition), background var(--transition); }
+    .btn-outline:hover { border-color: var(--color-accent); color: var(--color-accent-bright); background: var(--color-accent-subtle); }
+    .hero-scroll { position: absolute; bottom: var(--space-8); left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: var(--space-2); color: var(--color-text-faint); font-size: var(--text-xs); font-family: var(--font-mono); letter-spacing: 0.1em; animation: bounce-scroll 2.5s ease-in-out infinite; }
+    @keyframes bounce-scroll { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+    .hero-deco { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: min(400px, 40vw); opacity: 0.6; pointer-events: none; }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-label { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-accent-bright); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: var(--space-3); display: flex; align-items: center; gap: var(--space-2); }
+    .section-label::before { content: '//'; opacity: 0.5; }
+    .section-title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-white); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: var(--space-4); }
+    .section-desc { font-size: var(--text-base); color: var(--color-text-muted); max-width: 55ch; line-height: 1.7; }
+    .section-header { margin-bottom: var(--space-12); }
+
+    /* ===== ABOUT ===== */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: center; }
+    .about-text p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: var(--space-4); max-width: 55ch; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-8); }
+    .stat-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); transition: border-color var(--transition), box-shadow var(--transition); }
+    .stat-card:hover { border-color: var(--color-accent); box-shadow: var(--shadow-glow); }
+    .stat-number { font-family: var(--font-mono); font-size: var(--text-xl); font-weight: 700; color: var(--color-accent-bright); }
+    .stat-label { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-1); }
+    .about-visual { position: relative; display: flex; justify-content: center; }
+    .about-avatar-ring { width: 400px; height: 400px; border-radius: 50%; border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: var(--shadow-glow), inset 0 0 60px rgba(59,130,246,0.05); background: var(--color-surface); }
+    .about-avatar-ring::before { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 1px dashed rgba(59,130,246,0.2); animation: spin-ring 20s linear infinite; }
+    .about-avatar-ring::after  { content: ''; position: absolute; inset: -20px; border-radius: 50%; border: 1px dashed rgba(59,130,246,0.1); animation: spin-ring 35s linear infinite reverse; }
+    @keyframes spin-ring { to { transform: rotate(360deg); } }
+    .avatar-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .avatar-initials { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; color: var(--color-accent-bright); letter-spacing: -0.02em; display: none; }
+
+    /* ===== SKILLS ===== */
+    .skills-section { background: var(--color-surface); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: var(--space-4); }
+    .skill-category { background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); }
+    .skill-category:hover { border-color: var(--color-accent); transform: translateY(-2px); box-shadow: var(--shadow-glow); }
+    .skill-cat-icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: var(--color-accent-subtle); display: flex; align-items: center; justify-content: center; color: var(--color-accent-bright); margin-bottom: var(--space-4); }
+    .skill-cat-title { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); margin-bottom: var(--space-4); }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .skill-tag { font-family: var(--font-mono); font-size: var(--text-xs); padding: var(--space-1) var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-full); color: var(--color-text-muted); transition: border-color var(--transition), color var(--transition); }
+    .skill-category:hover .skill-tag { border-color: rgba(59,130,246,0.25); color: var(--color-text); }
+
+    /* ===== PROJECTS ===== */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(340px, 100%), 1fr)); gap: var(--space-6); }
+    .project-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); overflow: hidden; transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition); display: flex; flex-direction: column; }
+    .project-card:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow-glow), var(--shadow-lg); }
+    .project-thumb { height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .project-thumb-icon { font-size: 3rem; z-index: 1; }
+    .project-thumb-bg { position: absolute; inset: 0; opacity: 0.15; }
+    .p-web    .project-thumb-bg { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+    .p-game2d .project-thumb-bg { background: linear-gradient(135deg, #1e3a8a, #2563eb); }
+    .p-vr     .project-thumb-bg { background: linear-gradient(135deg, #1d4ed8, #60a5fa); }
+    .p-3d     .project-thumb-bg { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+    .p-design .project-thumb-bg { background: linear-gradient(135deg, #1d4ed8, #93c5fd); }
+    .project-body { padding: var(--space-5); flex: 1; display: flex; flex-direction: column; }
+    .project-type  { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-accent-bright); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: var(--space-2); }
+    .project-title { font-size: var(--text-lg); font-weight: 700; color: var(--color-white); margin-bottom: var(--space-2); line-height: 1.3; }
+    .project-desc  { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-4); flex: 1; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-4); }
+    .project-tech  { font-family: var(--font-mono); font-size: var(--text-xs); padding: 2px var(--space-2); background: var(--color-accent-subtle); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius-sm); color: var(--color-accent-bright); }
+    .project-links { display: flex; gap: var(--space-2); }
+    .project-link  { display: inline-flex; align-items: center; gap: var(--space-1); font-size: var(--text-xs); color: var(--color-text-muted); padding: var(--space-1) var(--space-3); border: 1px solid var(--color-border); border-radius: var(--radius-full); transition: color var(--transition), border-color var(--transition); }
+    .project-link:hover { color: var(--color-accent-bright); border-color: var(--color-accent); }
+
+    /* Project thumb image support */
+    .project-thumb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease; }
+    .project-card:hover .project-thumb-img { transform: scale(1.05); }
+    .project-thumb-bg { opacity: 0.5; }
+    .project-thumb:has(.project-thumb-img) .project-thumb-bg { opacity: 0.3; }
+    .project-thumb-link { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; }
+    .project-thumb-overlay { opacity: 0; color: white; background: rgba(59,130,246,0.6); width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: opacity 0.25s ease; backdrop-filter: blur(4px); }
+    .project-card:hover .project-thumb-overlay { opacity: 1; }
+    .project-thumb { cursor: default; }
+    .p-web .project-thumb { cursor: pointer; }
+    .project-card[data-href] { cursor: pointer; }
+    .project-card[data-href]:hover { border-color: var(--color-accent); transform: translateY(-4px); box-shadow: var(--shadow-glow), var(--shadow-lg); }
+    .project-links { position: relative; z-index: 2; }
+    .project-thumb-link { position: relative; z-index: 2; }
+    .project-thumb-overlay { z-index: 3; }
+
+    /* Clickable thumb for gameplay cards */
+    .p-game2d .project-thumb,
+    .p-vr .project-thumb { cursor: pointer; }
+
+    /* ===== GAMEPLAY MODAL ===== */
+    .gameplay-modal {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5, 11, 24, 0.92);
+      backdrop-filter: blur(12px);
+      align-items: center; justify-content: center;
+      padding: var(--space-6);
+      animation: modal-fade-in 0.25s ease;
+    }
+    .gameplay-modal.is-open { display: flex; }
+    @keyframes modal-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    .modal-inner {
+      position: relative;
+      width: 100%; max-width: 820px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      animation: modal-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes modal-slide-in { from { transform: translateY(24px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .modal-title {
+      font-family: var(--font-mono); font-size: var(--text-sm);
+      color: var(--color-accent-bright); letter-spacing: 0.06em;
+    }
+    .modal-close {
+      width: 32px; height: 32px; border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--color-text-muted); border: 1px solid var(--color-border);
+      transition: color var(--transition), border-color var(--transition), background var(--transition);
+    }
+    .modal-close:hover { color: var(--color-accent-bright); border-color: var(--color-accent); background: var(--color-accent-subtle); }
+    .modal-video-wrap {
+      position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 */
+      background: #000;
+    }
+    .modal-video-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      border: none;
+    }
+    .modal-footer {
+      padding: var(--space-4) var(--space-5);
+      border-top: 1px solid var(--color-border);
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+    }
+    .modal-desc { font-size: var(--text-xs); color: var(--color-text-faint); font-family: var(--font-mono); }
+    /* ===== GALLERY MODAL (Porsche 911) ===== */
+    .gallery-modal {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(5, 11, 24, 0.95);
+      backdrop-filter: blur(16px);
+      align-items: center; justify-content: center;
+      padding: var(--space-6);
+      animation: modal-fade-in 0.25s ease;
+    }
+    .gallery-modal.is-open { display: flex; }
+
+    .gallery-inner {
+      position: relative;
+      width: 100%; max-width: 900px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg), var(--shadow-glow);
+      animation: modal-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .gallery-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-4) var(--space-5);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .gallery-title {
+      font-family: var(--font-mono); font-size: var(--text-sm);
+      color: var(--color-accent-bright); letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .gallery-counter {
+      font-family: var(--font-mono); font-size: var(--text-xs);
+      color: var(--color-text-faint);
+      background: var(--color-surface-2);
+      padding: 2px var(--space-3);
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+    }
+
+    /* Main image viewer */
+    .gallery-stage {
+      position: relative;
+      width: 100%;
+      background: #000;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .gallery-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+      transform: scale(1.03);
+    }
+    .gallery-img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .gallery-img.exit-left  { opacity: 0; transform: translateX(-3%) scale(0.98); }
+    .gallery-img.exit-right { opacity: 0; transform: translateX(3%)  scale(0.98); }
+
+    /* Nav arrows */
+    .gallery-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(9, 21, 40, 0.75);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+    .gallery-arrow:hover {
+      background: var(--color-accent-subtle);
+      color: var(--color-accent-bright);
+      border-color: var(--color-accent);
+    }
+    .gallery-arrow.prev { left: var(--space-3); }
+    .gallery-arrow.next { right: var(--space-3); }
+    .gallery-arrow:disabled { opacity: 0.25; pointer-events: none; }
+
+    /* Caption */
+    .gallery-caption {
+      padding: var(--space-3) var(--space-5);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      font-size: var(--text-xs);
+      font-family: var(--font-mono);
+      color: var(--color-text-faint);
+      min-height: 36px;
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .gallery-caption::before { content: '//'; color: var(--color-accent-bright); opacity: 0.6; }
+
+    /* Thumbnails strip */
+    .gallery-thumbs {
+      display: flex; gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(59,130,246,0.3) transparent;
+    }
+    .gallery-thumbs::-webkit-scrollbar { height: 4px; }
+    .gallery-thumbs::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.3); border-radius: 2px; }
+
+    .gallery-thumb-item {
+      flex-shrink: 0;
+      width: 72px; height: 48px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 2px solid var(--color-border);
+      cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition);
+      opacity: 0.55;
+    }
+    .gallery-thumb-item:hover { opacity: 0.85; transform: translateY(-1px); }
+    .gallery-thumb-item.active {
+      border-color: var(--color-accent);
+      opacity: 1;
+      box-shadow: 0 0 10px rgba(59,130,246,0.4);
+    }
+    .gallery-thumb-item img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+
+    /* Dots indicator */
+    .gallery-dots {
+      display: flex; justify-content: center; align-items: center;
+      gap: var(--space-2); padding: var(--space-2) var(--space-5);
+    }
+    .gallery-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--color-border);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), width var(--transition);
+    }
+    .gallery-dot.active {
+      background: var(--color-accent-bright);
+      width: 18px;
+      border-radius: var(--radius-full);
+    }
+
+    /* p-3d thumb clickable */
+    .p-3d .project-thumb { cursor: pointer; }
+    /* ===== EXPERIENCE ===== */
+    .timeline { position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 1px; background: var(--color-border); }
+    .timeline-item { display: flex; gap: var(--space-6); padding-bottom: var(--space-10); position: relative; }
+    .timeline-dot { flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--color-surface-2); border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; color: var(--color-accent-bright); z-index: 1; transition: border-color var(--transition), box-shadow var(--transition); }
+    .timeline-item:hover .timeline-dot { border-color: var(--color-accent); box-shadow: var(--shadow-glow); }
+    .timeline-content { flex: 1; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: border-color var(--transition); }
+    .timeline-item:hover .timeline-content { border-color: rgba(59,130,246,0.25); }
+    .timeline-header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-3); }
+    .timeline-role    { font-size: var(--text-lg); font-weight: 700; color: var(--color-white); }
+    .timeline-company { font-size: var(--text-sm); color: var(--color-accent-bright); margin-top: var(--space-1); }
+    .timeline-date    { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-faint); background: var(--color-surface-2); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); border: 1px solid var(--color-border); white-space: nowrap; }
+    .timeline-bullets { margin-top: var(--space-3); }
+    .timeline-bullets li { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; padding-left: var(--space-4); position: relative; margin-bottom: var(--space-2); }
+    .timeline-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--color-accent-bright); font-size: 0.7em; }
+
+    /* ===== EDUCATION ===== */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: var(--space-4); }
+    .edu-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); transition: border-color var(--transition), transform var(--transition); }
+    .edu-card:hover { border-color: var(--color-accent); transform: translateY(-2px); }
+    .edu-icon { width: 44px; height: 44px; border-radius: var(--radius-md); background: var(--color-accent-subtle); border: 1px solid rgba(59,130,246,0.2); display: flex; align-items: center; justify-content: center; color: var(--color-accent-bright); margin-bottom: var(--space-4); }
+    .edu-degree      { font-size: var(--text-base); font-weight: 700; color: var(--color-white); margin-bottom: var(--space-1); }
+    .edu-institution { font-size: var(--text-sm); color: var(--color-accent-bright); margin-bottom: var(--space-2); }
+    .edu-year        { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-faint); }
+
+    /* ===== CERTIFICATIONS ===== */
+    .certs-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .cert-item { display: flex; align-items: center; gap: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); transition: border-color var(--transition); }
+    .cert-item:hover { border-color: rgba(59,130,246,0.3); }
+    .cert-icon { color: var(--color-accent-bright); flex-shrink: 0; }
+    .cert-text { font-size: var(--text-sm); color: var(--color-text-muted); }
+    .cert-text strong { color: var(--color-text); }
+    .cert-year { margin-left: auto; font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-faint); flex-shrink: 0; }
+
+    /* ===== CONTACT ===== */
+    .contact-section { background: var(--color-surface); text-align: center; position: relative; overflow: hidden; }
+    .contact-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(59,130,246,0.08), transparent); }
+    .contact-inner { position: relative; z-index: 1; max-width: 600px; margin-inline: auto; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-8); }
+    .contact-link { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text-muted); padding: var(--space-3) var(--space-5); border: 1px solid var(--color-border); border-radius: var(--radius-full); transition: color var(--transition), border-color var(--transition), background var(--transition), box-shadow var(--transition); }
+    .contact-link:hover { color: var(--color-accent-bright); border-color: var(--color-accent); background: var(--color-accent-subtle); box-shadow: var(--shadow-glow); }
+
+    /* ===== FOOTER ===== */
+    .footer { padding: var(--space-6); border-top: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-4); }
+    .footer-text { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-text-faint); }
+    .footer-text span { color: var(--color-accent-bright); }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 1; }
+    @supports (animation-timeline: scroll()) {
+      .reveal { opacity: 0; animation: reveal-fade linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+      @keyframes reveal-fade { to { opacity: 1; } }
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { order: -1; }
+      .about-avatar-ring { width: 500px; height: 500px; }
+      .avatar-initials { font-size: var(--text-xl); }
+      .hero-deco { display: none; }
+      .footer { flex-direction: column; text-align: center; }
+      .timeline::before { left: 20px; }
+      .timeline-dot { width: 40px; height: 40px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding-inline: var(--space-4); }
+      .hero-actions { flex-direction: column; align-items: flex-start; }
+      .contact-links { flex-direction: column; align-items: center; }
+      .modal-footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+  </div>
+
+  <div class="page">
+
+    <!-- NAV -->
+    <nav class="nav" role="navigation" aria-label="Navegación principal">
+      <div class="nav-logo">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="DS Logo">
+          <rect width="32" height="32" rx="8" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+          <text x="6" y="22" font-family="monospace" font-size="14" font-weight="700" fill="#60a5fa">DS</text>
+        </svg>
+        daniel.dev
+      </div>
+      <ul class="nav-links" role="list">
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#habilidades">Habilidades</a></li>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-tag">
+            <span class="hero-tag-dot" aria-hidden="true"></span>
+            Disponible para prácticas
+          </div>
+          <p class="hero-greeting">Hola, soy</p>
+          <h1 class="hero-name">Daniel<br><span class="accent">Silva</span><br></h1>
+          <p class="hero-title">Ingeniero en Multimedia</p>
+          <p class="hero-desc">Desarrollo software, diseño experiencias digitales interactivas y construyo soluciones que integran creatividad con funcionalidad técnica. Especializado en Unity, desarrollo web full-stack y sistemas de información.</p>
+          <div class="hero-actions">
+            <a href="#proyectos" class="btn-primary">
+              <i data-lucide="layout-grid" width="16" height="16" aria-hidden="true"></i>
+              Ver proyectos
+            </a>
+            <a href="#contacto" class="btn-outline">
+              <i data-lucide="mail" width="16" height="16" aria-hidden="true"></i>
+              Contáctame
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Decorative floating code visual -->
+      <div class="hero-deco" aria-hidden="true">
+        <svg viewBox="0 0 360 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="360" height="480" rx="16" fill="rgba(9,21,40,0.8)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+          <rect x="16" y="16" width="60" height="8" rx="4" fill="rgba(59,130,246,0.4)"/>
+          <rect x="84" y="16" width="40" height="8" rx="4" fill="rgba(96,165,250,0.25)"/>
+          <rect x="16" y="48"  width="200" height="6" rx="3" fill="rgba(148,168,200,0.15)"/>
+          <rect x="32" y="68"  width="140" height="6" rx="3" fill="rgba(96,165,250,0.2)"/>
+          <rect x="32" y="84"  width="180" height="6" rx="3" fill="rgba(148,168,200,0.12)"/>
+          <rect x="32" y="100" width="100" height="6" rx="3" fill="rgba(59,130,246,0.25)"/>
+          <rect x="16" y="124" width="80"  height="6" rx="3" fill="rgba(148,168,200,0.15)"/>
+          <rect x="32" y="144" width="220" height="6" rx="3" fill="rgba(148,168,200,0.1)"/>
+          <rect x="32" y="160" width="160" height="6" rx="3" fill="rgba(96,165,250,0.18)"/>
+          <rect x="32" y="176" width="200" height="6" rx="3" fill="rgba(59,130,246,0.2)"/>
+          <rect x="16" y="200" width="60"  height="6" rx="3" fill="rgba(148,168,200,0.15)"/>
+          <rect x="32" y="220" width="120" height="6" rx="3" fill="rgba(148,168,200,0.1)"/>
+          <rect x="32" y="236" width="180" height="6" rx="3" fill="rgba(96,165,250,0.15)"/>
+          <rect x="16" y="268" width="40"  height="6" rx="3" fill="rgba(96,165,250,0.3)"/>
+          <rect x="32" y="288" width="140" height="6" rx="3" fill="rgba(148,168,200,0.12)"/>
+          <rect x="32" y="304" width="100" height="6" rx="3" fill="rgba(59,130,246,0.22)"/>
+          <rect x="32" y="320" width="160" height="6" rx="3" fill="rgba(148,168,200,0.1)"/>
+          <rect x="16" y="344" width="80"  height="6" rx="3" fill="rgba(148,168,200,0.15)"/>
+          <rect x="32" y="376" width="8" height="14" rx="2" fill="rgba(96,165,250,0.7)">
+            <animate attributeName="opacity" values="1;0;1" dur="1.2s" repeatCount="indefinite"/>
+          </rect>
+        </svg>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        scroll
+        <i data-lucide="chevron-down" width="14" height="14"></i>
+      </div>
+    </section>
+
+    <!-- SOBRE MÍ -->
+    <section id="sobre-mi">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text reveal">
+            <div class="section-label">Sobre mí</div>
+            <h2 class="section-title">Dev & Diseñador,<br>todo en uno</h2>
+            <p>Soy estudiante de Ingeniería en Multimedia en la Universidad Militar Nueva Granada, con más de 4 años desarrollando proyectos que cruzan la línea entre código y creatividad.</p>
+            <p>Me especializo en desarrollo de videojuegos con Unity, desarrollo web full-stack y sistemas de información. Creo que el mejor software no solo funciona, sino que también se siente bien.</p>
+            <div class="about-stats">
+              <div class="stat-card"><div class="stat-number">4+</div><div class="stat-label">Años en desarrollo</div></div>
+              <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Proyectos destacados</div></div>
+              <div class="stat-card"><div class="stat-number">8+</div><div class="stat-label">Tecnologías</div></div>
+              <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Roles de experiencia</div></div>
+            </div>
+          </div>
+          <div class="about-visual reveal">
+            <div class="about-avatar-ring">
+              <img src="img/foto-daniel.png" alt="Daniel Silva" class="avatar-photo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="avatar-initials">DSS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="habilidades" class="skills-section">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Habilidades técnicas</div>
+          <h2 class="section-title">Stack tecnológico</h2>
+          <p class="section-desc">Competencias en desarrollo de software, diseño y producción multimedia acumuladas a través de proyectos académicos y experiencia laboral.</p>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="database" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Bases de Datos</div>
+            <div class="skill-tags">
+              <span class="skill-tag">MySQL</span><span class="skill-tag">Firebase</span><span class="skill-tag">NoSQL</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="code-2" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Lenguajes de Programación</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Python</span><span class="skill-tag">C++</span><span class="skill-tag">JavaScript</span><span class="skill-tag">PHP</span><span class="skill-tag">C#</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="globe" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Desarrollo Web</div>
+            <div class="skill-tags">
+              <span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">PHP</span><span class="skill-tag">Json</span><span class="skill-tag">JavaScript</span><span class="skill-tag">UI/UX</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="gamepad-2" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Videojuegos / Interactivo</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Unity</span><span class="skill-tag">VR</span><span class="skill-tag">Unreal Engine</span><span class="skill-tag">Mobile</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="pen-tool" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Diseño Multimedia</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Premiere</span><span class="skill-tag">After Effects</span><span class="skill-tag">Figma</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="box" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">3D / Animación</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Blender</span><span class="skill-tag">Autodesk Maya</span><span class="skill-tag">Rigging</span><span class="skill-tag">Texturizado</span>
+            </div>
+          </div>
+          <div class="skill-category reveal">
+            <div class="skill-cat-icon"><i data-lucide="git-branch" width="18" height="18" aria-hidden="true"></i></div>
+            <div class="skill-cat-title">Control de Versiones</div>
+            <div class="skill-tags">
+              <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span><span class="skill-tag">Firebase</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="proyectos">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Proyectos destacados</div>
+          <h2 class="section-title">Lo que he construido</h2>
+          <p class="section-desc">Proyectos académicos y personales que demuestran el rango completo de mis habilidades técnicas y creativas.</p>
+        </div>
+        <div class="projects-grid">
+
+          <!-- Proyecto 1: Sitio Web Gimnasio -->
+          <article class="project-card p-web reveal"
+                   data-href="https://danielsilva0514.github.io/Gimnasio-Sitio-Web"
+                   data-href-label="Abrir repositorio Sitio Web Gimnasio">
+            <div class="project-thumb">
+              <div class="project-thumb-bg"></div>
+              <img src="img/gym-preview.jpg" alt="Vista previa sitio web gimnasio" class="project-thumb-img" loading="lazy" width="400" height="180">
+              <a href="https://danielsilva0514.github.io/Gimnasio-Sitio-Web" target="_blank" rel="noopener noreferrer"
+                 class="project-thumb-link" aria-label="Ver demo del sitio web para gimnasio">
+                <div class="project-thumb-overlay">
+                  <i data-lucide="external-link" width="24" height="24"></i>
+                </div>
+              </a>
+            </div>
+            <div class="project-body">
+              <div class="project-type">Web Full-Stack</div>
+              <h3 class="project-title">Sitio Web para Gimnasio</h3>
+              <p class="project-desc">Landing page completa con diseño responsivo, integración MySQL para gestión de datos de usuarios y branding visual consistente. Flujo completo: requerimientos → diseño → implementación.</p>
+              <div class="project-stack">
+                <span class="project-tech">HTML5</span>
+                <span class="project-tech">CSS3</span>
+                <span class="project-tech">JavaScript</span>
+                <span class="project-tech">MySQL</span>
+                <span class="project-tech">PHP</span>
+              </div>
+              <div class="project-links">
+                <a href="https://github.com/DanielSilva0514/Gimnasio-Sitio-Web" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <i data-lucide="github" width="12" height="12" aria-hidden="true"></i> Código
+                </a>
+                <a href="https://danielsilva0514.github.io/Gimnasio-Sitio-Web" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <i data-lucide="external-link" width="12" height="12" aria-hidden="true"></i> Demo
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 2: Videojuego 2D -->
+          <article class="project-card p-game2d reveal"
+                   data-modal="modal-game2d">
+            <div class="project-thumb" data-modal-trigger="modal-game2d" title="Ver gameplay">
+              <div class="project-thumb-bg"></div>
+              <img src="img/game2d-preview.png" alt="Vista previa videojuego 2D Unity" class="project-thumb-img" loading="lazy" width="400" height="180">
+              <div class="project-thumb-link" aria-hidden="true">
+                <div class="project-thumb-overlay">
+                  <i data-lucide="play" width="24" height="24"></i>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-type">Videojuego 2D</div>
+              <h3 class="project-title">Endless Runner</h3>
+              <p class="project-desc">Endless runner para Android desarrollado en Unity. El jugador esquiva obstáculos generados proceduralmente con dificultad progresiva, sistema de puntuación, animaciones por sprite sheet y UI móvil optimizada para pantallas táctiles.</p>
+              <div class="project-stack">
+                <span class="project-tech">Unity</span>
+                <span class="project-tech">C#</span>
+                <span class="project-tech">Firebase</span>
+                <span class="project-tech">GitHub</span>
+              </div>
+              <div class="project-links">
+                <!-- REEMPLAZA la URL con tu repo real del juego 2D -->
+                <a href="https://github.com/DanielSilva0514/Juego-2D-El-Mandado-" target="_blank" rel="noopener noreferrer" class="project-link">
+                  <i data-lucide="github" width="12" height="12" aria-hidden="true"></i> Código
+                </a>
+                <button class="project-link" data-modal-trigger="modal-game2d" type="button">
+                  <i data-lucide="play" width="12" height="12" aria-hidden="true"></i> Gameplay
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto 3: Videojuego VR -->
+          <article class="project-card p-vr reveal"
+                   data-modal="modal-vr">
+            <div class="project-thumb" data-modal-trigger="modal-vr" title="Ver gameplay">
+              <div class="project-thumb-bg"></div>
+              <img src="img/vr-preview.png" alt="Vista previa videojuego VR" class="project-thumb-img" loading="lazy" width="400" height="180">
+              <div class="project-thumb-link" aria-hidden="true">
+                <div class="project-thumb-overlay">
+                  <i data-lucide="play" width="24" height="24"></i>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-type">Realidad Virtual</div>
+              <h3 class="project-title">Videojuego VR en Unity</h3>
+              <p class="project-desc">VR-Safe es una simulación educativa en VR donde el usuario aprende a identificar el extintor correcto según el tipo de fuego mediante exploración y toma de decisiones. Integra modelado 3D, audio espacial e interacciones por mirada (gaze). Desarrollado para Google Cardboard, garantizando bajo costo de acceso y alta portabilidad.</p>
+              <div class="project-stack">
+                <span class="project-tech">Unity VR</span>
+                <span class="project-tech">C#</span>
+                <span class="project-tech">Google Cardboard</span>
+                <span class="project-tech">Audio Espacial</span>
+                <span class="project-tech">Gaze Interaction</span>
+              </div>
+              <div class="project-links">
+                
+                <button class="project-link" data-modal-trigger="modal-vr" type="button">
+                  <i data-lucide="play" width="12" height="12" aria-hidden="true"></i> Gameplay
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto: Modelado 3D – Porsche 911 -->
+          <article class="project-card p-3d reveal" data-modal="modal-porsche">
+            <div class="project-thumb" data-modal-trigger="modal-porsche" title="Ver galería de renders">
+              <div class="project-thumb-bg"></div>
+              <!--
+                REEMPLAZA src con tu render principal del Porsche.
+                Ejemplo: img/carro-01.jpg
+              -->
+              <img src="img/3d-preview.png"
+                  alt="Render Porsche 911 – Blender"
+                  class="project-thumb-img" loading="lazy" width="400" height="180">
+              <div class="project-thumb-link" aria-hidden="true">
+                <div class="project-thumb-overlay">
+                  <i data-lucide="images" width="24" height="24"></i>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-type">Modelado 3D</div>
+              <h3 class="project-title">Porsche 911 – Blender</h3>
+              <p class="project-desc">Modelado completo desde cero de un Porsche 911: topología limpia, UV unwrap, texturizado PBR con materiales de carrocería, vidrio y llantas. Renderizado con Cycles con iluminación HDRI.</p>
+              <div class="project-stack">
+                <span class="project-tech">Blender</span>
+                <span class="project-tech">Cycles</span>
+                <span class="project-tech">PBR</span>
+                <span class="project-tech">UV Unwrap</span>
+                <span class="project-tech">HDRI</span>
+              </div>
+              <div class="project-links">
+                <button class="project-link" data-modal-trigger="modal-porsche" type="button">
+                  <i data-lucide="images" width="12" height="12" aria-hidden="true"></i> Ver galería
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Proyecto: Video Animado – V Competencia Tracción Eléctrica -->
+          <article class="project-card p-design reveal" data-modal="modal-video-electrica">
+            <div class="project-thumb" data-modal-trigger="modal-video-electrica" title="Ver video">
+              <div class="project-thumb-bg"></div>
+              <img src="https://img.youtube.com/vi/kMGjRCo2IEg/maxresdefault.jpg" alt="Video animado – V Competencia Nacional Vehículos Tracción Eléctrica" class="project-thumb-img" loading="lazy" width="400" height="180">
+              <div class="project-thumb-link" aria-hidden="true">
+                <div class="project-thumb-overlay">
+                  <i data-lucide="play" width="24" height="24"></i>
+                </div>
+              </div>
+            </div>
+            <div class="project-body">
+              <div class="project-type">Motion Graphics / Video</div>
+              <h3 class="project-title">V Competencia Nacional de Vehículos de Tracción Eléctrica</h3>
+              <p class="project-desc">Video animado de promoción para la quinta edición del evento nacional. Producción completa con motion graphics, composición y efectos visuales. Diseño de identidad en movimiento adaptado al contexto de ingeniería y tecnología.</p>
+              <div class="project-stack">
+                <span class="project-tech">After Effects</span>
+                <span class="project-tech">Premiere Pro</span>
+                <span class="project-tech">Motion Graphics</span>
+              </div>
+              <div class="project-links">
+                <button class="project-link" data-modal-trigger="modal-video-electrica" type="button">
+                  <i data-lucide="play" width="12" height="12" aria-hidden="true"></i> Ver video
+                </button>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCACIÓN & CERTS -->
+    <section id="educacion">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="section-label">Formación</div>
+          <h2 class="section-title">Educación &amp; Certificaciones</h2>
+        </div>
+        <div class="edu-grid">
+          <div class="edu-card reveal">
+            <div class="edu-icon"><i data-lucide="graduation-cap" width="20" height="20" aria-hidden="true"></i></div>
+            <div class="edu-degree">Ingeniería en Multimedia</div>
+            <div class="edu-institution">Universidad Militar Nueva Granada</div>
+            <div class="edu-year">2021 – Actualidad · Bogotá</div>
+          </div>
+          <div class="edu-card reveal">
+            <div class="edu-icon"><i data-lucide="book-open" width="20" height="20" aria-hidden="true"></i></div>
+            <div class="edu-degree">Bachiller Académico</div>
+            <div class="edu-institution">Liceo el Encuentro</div>
+            <div class="edu-year">2020 · Bogotá</div>
+          </div>
+        </div>
+        <div class="certs-list" style="margin-top: var(--space-8)">
+          <div class="cert-item reveal">
+            <i data-lucide="badge-check" width="20" height="20" class="cert-icon" aria-hidden="true"></i>
+            <div class="cert-text"><strong>COLOMBIA 4.0</strong> – Conferencia de Transformación Digital, MinTIC</div>
+            <div class="cert-year">2024</div>
+          </div>
+          <div class="cert-item reveal">
+            <i data-lucide="badge-check" width="20" height="20" class="cert-icon" aria-hidden="true"></i>
+            <div class="cert-text"><strong>Microsoft Office 2016 Excel</strong> – SENA</div>
+            <div class="cert-year">2023</div>
+          </div>
+          <div class="cert-item reveal">
+            <i data-lucide="badge-check" width="20" height="20" class="cert-icon" aria-hidden="true"></i>
+            <div class="cert-text"><strong>Noveno Congreso El Cine en Tiempos Agitados</strong> – SMARTFILMS</div>
+            <div class="cert-year">2023</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="contact-section">
+      <div class="container">
+        <div class="contact-inner reveal">
+          <div class="section-label" style="justify-content:center">Contacto</div>
+          <h2 class="section-title">¿Hablamos?</h2>
+          <p class="section-desc" style="margin-inline:auto">
+            Estoy buscando oportunidades de práctica profesional. Si tienes un proyecto interesante o una vacante, me encantaría conectar.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:ing.danielsilvas@gmail.com" class="contact-link">
+              <i data-lucide="mail" width="16" height="16" aria-hidden="true"></i>
+              ing.danielsilvas@gmail.com
+            </a>
+            <a href="tel:3155024038" class="contact-link">
+              <i data-lucide="phone" width="16" height="16" aria-hidden="true"></i>
+              315 502 4038
+            </a>
+            <a href="https://www.linkedin.com/in/daniel-silva-1716193ab/" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <i data-lucide="linkedin" width="16" height="16" aria-hidden="true"></i>
+              LinkedIn
+            </a>
+            <a href="https://github.com/DanielSilva0514" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <i data-lucide="github" width="16" height="16" aria-hidden="true"></i>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-text"><span>Daniel Santiago Silva</span> · Ingeniero en Multimedia · Bogotá, Colombia</div>
+      <div class="footer-text">Construido con <span>HTML · CSS · JS</span></div>
+    </footer>
+
+  </div><!-- /.page -->
+
+
+  <!-- ============================================================
+       MODAL: GAMEPLAY VIDEOJUEGO 2D
+       ============================================================ -->
+  <div id="modal-game2d" class="gameplay-modal" role="dialog" aria-modal="true" aria-labelledby="modal-game2d-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-game2d-title">
+          <i data-lucide="gamepad-2" width="14" height="14" style="display:inline-block;vertical-align:middle;margin-right:6px"></i>
+          Gameplay — Plataformas en Unity 2D
+        </span>
+        <button class="modal-close" data-modal-close="modal-game2d" aria-label="Cerrar modal">
+          <i data-lucide="x" width="16" height="16"></i>
+        </button>
+      </div>
+      <div class="modal-video-wrap">
+        <!--
+          REEMPLAZA  TU_VIDEO_2D_ID  con el ID de tu video de YouTube.
+          Ejemplo: si tu video es https://www.youtube.com/watch?v=dQw4w9WgXcQ
+          el ID es  dQw4w9WgXcQ
+        -->
+        <iframe
+          id="iframe-game2d"
+          src=""
+          data-src="https://www.youtube.com/embed/v6jbBa7E2PA?autoplay=1&rel=0&modestbranding=1"
+          title="Gameplay Videojuego 2D Unity"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <span class="modal-desc">// Plataformas en Unity · C# · Física personalizada · Sprite Sheet</span>
+        <!-- REEMPLAZA la URL con tu repo real -->
+        <a href="https://github.com/DanielSilva0514/Juego-2D-El-Mandado-" target="_blank" rel="noopener noreferrer" class="project-link">
+          <i data-lucide="github" width="12" height="12" aria-hidden="true"></i> Ver en GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL: GAMEPLAY VIDEOJUEGO VR
+       ============================================================ -->
+  <div id="modal-vr" class="gameplay-modal" role="dialog" aria-modal="true" aria-labelledby="modal-vr-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-vr-title">
+          <i data-lucide="glasses" width="14" height="14" style="display:inline-block;vertical-align:middle;margin-right:6px"></i>
+          Gameplay — Videojuego VR en Unity
+        </span>
+        <button class="modal-close" data-modal-close="modal-vr" aria-label="Cerrar modal">
+          <i data-lucide="x" width="16" height="16"></i>
+        </button>
+      </div>
+      <div class="modal-video-wrap">
+        <!--
+          REEMPLAZA  TU_VIDEO_VR_ID  con el ID de tu video de YouTube.
+          Ejemplo: si tu video es https://www.youtube.com/watch?v=abc123XYZ
+          el ID es  abc123XYZ
+        -->
+        <iframe
+          id="iframe-vr"
+          src=""
+          data-src="https://www.youtube.com/embed/q9Kf2kJyeNg?autoplay=1&rel=0&modestbranding=1"
+          title="Gameplay Videojuego VR Unity"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <span class="modal-desc">// Videojuego VR · Unity XR Toolkit · C# · Respuesta háptica</span>
+        <!-- REEMPLAZA la URL con tu repo real -->
+      
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================
+      MODAL: GALERÍA PORSCHE 911
+      ============================================================ -->
+  <div id="modal-porsche" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="gallery-porsche-title">
+    <div class="gallery-inner">
+
+      <div class="gallery-header">
+        <span class="gallery-title" id="gallery-porsche-title">
+          <i data-lucide="box" width="14" height="14" style="display:inline-block;vertical-align:middle"></i>
+          Porsche 911 &mdash; Renders
+        </span>
+        <div style="display:flex;align-items:center;gap:var(--space-3)">
+          <span class="gallery-counter" id="gallery-porsche-counter">1 / 6</span>
+          <button class="modal-close" id="gallery-porsche-close" aria-label="Cerrar galería">
+            <i data-lucide="x" width="16" height="16"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stage principal -->
+      <div class="gallery-stage" id="gallery-porsche-stage">
+        <!--
+          REEMPLAZA los src de cada imagen con tus renders reales.
+          Puedes agregar o quitar <img> según cuántos renders tengas.
+          Rutas sugeridas: img/carro-01.jpg, img/carro-02.jpg …
+        -->
+        <img src="img/carro-01.png" alt="Porsche 911 – Vista frontal"    class="gallery-img active" data-index="0">
+        <img src="img/carro-02.png" alt="Porsche 911 – Vista lateral"    class="gallery-img"        data-index="1">
+        <img src="img/carro-03.png" alt="Porsche 911 – Vista trasera"    class="gallery-img"        data-index="2">
+        <img src="img/carro-04.png" alt="Porsche 911 – Interior/detalle" class="gallery-img"        data-index="3">
+        <img src="img/carro-05.png" alt="Porsche 911 – Detalle llanta"   class="gallery-img"        data-index="4">
+        <img src="img/carro-06.png" alt="Porsche 911 – Render estudio"   class="gallery-img"        data-index="5">
+
+        <button class="gallery-arrow prev" id="porsche-prev" aria-label="Imagen anterior">
+          <i data-lucide="chevron-left" width="20" height="20"></i>
+        </button>
+        <button class="gallery-arrow next" id="porsche-next" aria-label="Imagen siguiente">
+          <i data-lucide="chevron-right" width="20" height="20"></i>
+        </button>
+      </div>
+
+      <!-- Caption dinámica -->
+      <div class="gallery-caption" id="gallery-porsche-caption">Vista frontal – Izquierda</div>
+
+      <!-- Tiras de miniaturas -->
+      <div class="gallery-thumbs" id="gallery-porsche-thumbs">
+        <div class="gallery-thumb-item active" data-thumb="0">
+          <img src="img/carro-01.png" alt="Thumb 1">
+        </div>
+        <div class="gallery-thumb-item" data-thumb="1">
+          <img src="img/carro-02.png" alt="Thumb 2">
+        </div>
+        <div class="gallery-thumb-item" data-thumb="2">
+          <img src="img/carro-03.png" alt="Thumb 3">
+        </div>
+        <div class="gallery-thumb-item" data-thumb="3">
+          <img src="img/carro-04.png" alt="Thumb 4">
+        </div>
+        <div class="gallery-thumb-item" data-thumb="4">
+          <img src="img/carro-05.png" alt="Thumb 5">
+        </div>
+        <div class="gallery-thumb-item" data-thumb="5">
+          <img src="img/carro-06.png" alt="Thumb 6">
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="gallery-dots" id="gallery-porsche-dots">
+        <button class="gallery-dot active" data-dot="0" aria-label="Imagen 1"></button>
+        <button class="gallery-dot"        data-dot="1" aria-label="Imagen 2"></button>
+        <button class="gallery-dot"        data-dot="2" aria-label="Imagen 3"></button>
+        <button class="gallery-dot"        data-dot="3" aria-label="Imagen 4"></button>
+        <button class="gallery-dot"        data-dot="4" aria-label="Imagen 5"></button>
+        <button class="gallery-dot"        data-dot="5" aria-label="Imagen 6"></button>
+      </div>
+
+    </div>
+  </div>
+  <!-- ============================================================
+      MODAL: VIDEO – V Competencia Tracción Eléctrica
+      ============================================================ -->
+  <div id="modal-video-electrica" class="gameplay-modal" role="dialog" aria-modal="true" aria-labelledby="modal-electrica-title">
+    <div class="modal-inner">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-electrica-title">
+          <i data-lucide="film" width="14" height="14" style="display:inline-block;vertical-align:middle;margin-right:6px"></i>
+          V Competencia Nacional · Tracción Eléctrica
+        </span>
+        <button class="modal-close" data-modal-close="modal-video-electrica" aria-label="Cerrar modal">
+          <i data-lucide="x" width="16" height="16"></i>
+        </button>
+      </div>
+      <div class="modal-video-wrap">
+        <iframe
+          id="iframe-electrica"
+          src=""
+          data-src="https://www.youtube.com/embed/kMGjRCo2IEg?autoplay=1&rel=0&modestbranding=1"
+          title="Video animado V Competencia Nacional Vehículos Tracción Eléctrica"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="modal-footer">
+        <span class="modal-desc">// After Effects · Premiere Pro · Motion Graphics</span>
+        <a href="https://www.youtube.com/watch?v=kMGjRCo2IEg" target="_blank" rel="noopener noreferrer" class="project-link">
+          <i data-lucide="youtube" width="12" height="12" aria-hidden="true"></i> Ver en YouTube
+        </a>
+      </div>
+    </div>
+  </div>
+  <script>
+    // ── Icons ──────────────────────────────────────────────────
+    lucide.createIcons();
+
+    // ── Nav scroll effect ──────────────────────────────────────
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 50
+        ? 'rgba(59, 130, 246, 0.2)'
+        : 'rgba(96, 165, 250, 0.12)';
+    }, { passive: true });
+
+    // ── Active nav links on scroll ─────────────────────────────
+    const sections  = document.querySelectorAll('section[id]');
+    const navLinks  = document.querySelectorAll('.nav-links a');
+    const sectionObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.style.color = link.getAttribute('href') === `#${id}`
+              ? 'var(--color-text)'
+              : '';
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => sectionObserver.observe(s));
+
+    // ── Clickable cards (data-href) ────────────────────────────
+    document.querySelectorAll('.project-card[data-href]').forEach(card => {
+      card.addEventListener('click', e => {
+        if (e.target.closest('a, button')) return;
+        window.open(card.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+      });
+      card.setAttribute('role', 'link');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', card.getAttribute('data-href-label') || 'Ver proyecto');
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.open(card.getAttribute('data-href'), '_blank', 'noopener,noreferrer');
+        }
+      });
+    });
+
+    // ── Gameplay Modal system ──────────────────────────────────
+    function openModal(modalId) {
+      const modal  = document.getElementById(modalId);
+      if (!modal) return;
+
+      // Lazy-load the iframe src on first open
+      const iframe = modal.querySelector('iframe[data-src]');
+      if (iframe && !iframe.src.includes('youtube')) {
+        iframe.src = iframe.getAttribute('data-src');
+      }
+
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+
+      // Focus trap – focus close button
+      const closeBtn = modal.querySelector('[data-modal-close]');
+      if (closeBtn) setTimeout(() => closeBtn.focus(), 50);
+    }
+
+    function closeModal(modalId) {
+      const modal  = document.getElementById(modalId);
+      if (!modal) return;
+
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+
+      // Stop video by removing src temporarily
+      const iframe = modal.querySelector('iframe');
+      if (iframe) {
+        const saved = iframe.src;
+        iframe.src = '';
+        iframe.setAttribute('data-src', saved);
+      }
+    }
+
+    // Open via [data-modal-trigger]
+    document.querySelectorAll('[data-modal-trigger]').forEach(trigger => {
+      trigger.addEventListener('click', e => {
+        e.stopPropagation();
+        openModal(trigger.getAttribute('data-modal-trigger'));
+      });
+    });
+
+    // Close via [data-modal-close]
+    document.querySelectorAll('[data-modal-close]').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(btn.getAttribute('data-modal-close')));
+    });
+
+    // Close clicking backdrop
+    document.querySelectorAll('.gameplay-modal').forEach(modal => {
+      modal.addEventListener('click', e => {
+        if (e.target === modal) closeModal(modal.id);
+      });
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.gameplay-modal.is-open').forEach(m => closeModal(m.id));
+      }
+    });
+
+        // ── Gallery Modal – Porsche 911 ────────────────────────────
+    (function () {
+      const MODAL_ID   = 'modal-porsche';
+      const modal      = document.getElementById(MODAL_ID);
+      if (!modal) return;
+
+      const captions = [
+        'Vista frontal – Izquierda',
+        'Vista lateral ',
+        'Vista Frontal – Derecha',
+        'Vista frontal – Izquierda',
+        'Vista Superior',
+        'Vista Panorámica',
+      ];
+
+      const imgs      = Array.from(modal.querySelectorAll('.gallery-img'));
+      const thumbs    = Array.from(modal.querySelectorAll('.gallery-thumb-item'));
+      const dots      = Array.from(modal.querySelectorAll('.gallery-dot'));
+      const counter   = modal.querySelector('#gallery-porsche-counter');
+      const caption   = modal.querySelector('#gallery-porsche-caption');
+      const prevBtn   = modal.querySelector('#porsche-prev');
+      const nextBtn   = modal.querySelector('#porsche-next');
+      const closeBtn  = modal.querySelector('#gallery-porsche-close');
+
+      let current = 0;
+      const total = imgs.length;
+
+      function goTo(index, direction = 'next') {
+        if (index === current) return;
+        const prev = current;
+
+        // Exit animation for old image
+        imgs[prev].classList.remove('active');
+        imgs[prev].classList.add(direction === 'next' ? 'exit-left' : 'exit-right');
+        setTimeout(() => imgs[prev].classList.remove('exit-left', 'exit-right'), 400);
+
+        // Enter new image
+        current = (index + total) % total;
+        imgs[current].classList.add('active');
+
+        // Update UI
+        thumbs.forEach((t, i) => t.classList.toggle('active', i === current));
+        dots.forEach((d, i)   => d.classList.toggle('active', i === current));
+        counter.textContent = `${current + 1} / ${total}`;
+        caption.textContent = captions[current] ?? '';
+        prevBtn.disabled = false;
+        nextBtn.disabled = false;
+
+        // Scroll thumb into view
+        thumbs[current]?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+      }
+
+      prevBtn.addEventListener('click', () => goTo(current - 1, 'prev'));
+      nextBtn.addEventListener('click', () => goTo(current + 1, 'next'));
+      thumbs.forEach(t => t.addEventListener('click', () => goTo(+t.dataset.thumb)));
+      dots.forEach(d   => d.addEventListener('click', () => goTo(+d.dataset.dot)));
+
+      // Open
+      function openGallery() {
+        goTo(0); // reset to first
+        modal.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => closeBtn.focus(), 50);
+      }
+      document.querySelectorAll('[data-modal-trigger="modal-porsche"]').forEach(el => {
+        el.addEventListener('click', e => { e.stopPropagation(); openGallery(); });
+      });
+
+      // Close
+      function closeGallery() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+      closeBtn.addEventListener('click', closeGallery);
+      modal.addEventListener('click', e => { if (e.target === modal) closeGallery(); });
+
+      // Keyboard: arrows + Escape
+      document.addEventListener('keydown', e => {
+        if (!modal.classList.contains('is-open')) return;
+        if (e.key === 'ArrowRight') goTo(current + 1, 'next');
+        if (e.key === 'ArrowLeft')  goTo(current - 1, 'prev');
+        if (e.key === 'Escape')     closeGallery();
+      });
+
+      // Touch/swipe support
+      let touchStartX = 0;
+      modal.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      modal.addEventListener('touchend',   e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) diff > 0 ? goTo(current + 1, 'next') : goTo(current - 1, 'prev');
+      });
+    })();
+  </script>
+</body>
+</html>
